@@ -2,7 +2,7 @@
 
 ## Contexte
 Bot de publication automatique sur les thèmes : stages, alternance, apprentissage.
-57 tweets prêts dans `tweets.json`, sélection déterministe par jour de l'année.
+57 posts prêts, sélection déterministe par jour de l'année (pas de répétition dans l'année).
 GitHub Actions configuré pour poster lun/mer/ven à 9h (heure française).
 
 ## Twitter/X — Abandonné
@@ -10,21 +10,26 @@ GitHub Actions configuré pour poster lun/mer/ven à 9h (heure française).
 - ✅ Workflow GitHub Actions configuré (`auto-tweet.yml`)
 - ✅ Authentification OAuth 1.0a fonctionnelle (`x-access-level: read-write`)
 - ❌ Plan gratuit ne permet plus de poster via API (erreur 402 CreditsDepleted)
-- 💸 Plan Basic = $100/mois → trop cher pour ~12 tweets/mois
+- 💸 Plan Basic = $100/mois → abandonné
 
-## LinkedIn — À faire
-- [ ] Décider : page entreprise VoiePro ou profil personnel ?
-- [ ] Décider : même repo ou repo séparé ?
-- [ ] Créer une app sur `linkedin.com/developers`
-- [ ] Activer le produit "Share on LinkedIn"
-- [ ] Générer un token OAuth 2.0 initial (via navigateur)
-- [ ] Adapter le script `post-tweet.js` → `post-linkedin.js`
-- [ ] Configurer les secrets GitHub pour LinkedIn
-- [ ] Adapter le workflow GitHub Actions
-- [ ] Tester la publication
+## LinkedIn — En cours
+- ✅ Décidé : page entreprise VoiePro
+- ✅ Repo séparé créé : `zbenkhelifa/voiepro-linkedin`
+- ✅ Script `post-linkedin.js` (Posts API v202401, scope `w_organization_social`)
+- ✅ Workflow GitHub Actions configuré (`auto-post.yml`)
+- ✅ 57 posts copiés dans `posts.json`
+- [ ] Récupérer l'Organization ID de la page LinkedIn VoiePro
+- [ ] Créer une app sur `linkedin.com/developers` liée à la page VoiePro
+- [ ] Activer le produit **"Share on LinkedIn"**
+- [ ] Générer un token OAuth 2.0 avec scope `w_organization_social`
+- [ ] Ajouter les 2 secrets GitHub dans `voiepro-linkedin` :
+  - `LINKEDIN_ACCESS_TOKEN`
+  - `LINKEDIN_ORGANIZATION_ID`
+- [ ] Tester la publication via "Run workflow"
 
 ## Notes techniques LinkedIn
-- Token d'accès : expire tous les 60 jours
-- Refresh token : valide 365 jours (à stocker en secret GitHub)
-- Scope nécessaire : `w_member_social` (profil) ou `w_organization_social` (page entreprise)
-- API à utiliser : UGC Posts API (`https://api.linkedin.com/v2/ugcPosts`)
+- Repo : `https://github.com/zbenkhelifa/voiepro-linkedin`
+- API utilisée : Posts API (`https://api.linkedin.com/rest/posts`) — version 202401
+- Token d'accès : expire tous les 60 jours → à régénérer manuellement
+- Scope nécessaire : `w_organization_social`
+- Organization ID : visible dans l'URL de la page admin (`linkedin.com/company/{ID}/`)
