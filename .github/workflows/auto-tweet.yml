@@ -1,0 +1,32 @@
+name: Auto Tweet VoiePro
+
+on:
+  schedule:
+    # Lundi, mercredi, vendredi à 8h00 UTC (9h ou 10h heure française)
+    - cron: '0 8 * * 1,3,5'
+  workflow_dispatch: # déclenchement manuel possible depuis GitHub
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Post tweet
+        run: node post-tweet.js
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}

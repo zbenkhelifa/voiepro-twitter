@@ -1,0 +1,11 @@
+{
+  "name": "voiepro-twitter",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "post": "node post-tweet.js"
+  },
+  "dependencies": {
+    "twitter-api-v2": "^1.17.2"
+  }
+}
